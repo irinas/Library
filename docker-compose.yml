@@ -1,0 +1,27 @@
+services:
+  library-service:
+    build:
+      context: .
+      dockerfile: src/Library.Service/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Library: Data Source=/data/library.db;Cache=Shared
+    volumes:
+      - library-data:/data
+    expose:
+      - "8080"
+    restart: unless-stopped
+  library-api:
+    build:
+      context: .
+      dockerfile: src/Library.Api/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      LibraryService__Address: http://library-service:8080
+    depends_on:
+      - library-service
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
+volumes:
+  library-data:

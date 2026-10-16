@@ -1,0 +1,4 @@
+namespace Library.Service.Domain;
+public sealed class BookEntity { public string Id { get; set; } = Guid.NewGuid().ToString("N"); public string Title { get; set; } = ""; public string Author { get; set; } = ""; public int Pages { get; set; } public int TotalCopies { get; set; } public int AvailableCopies { get; set; } public List<LoanEntity> Loans { get; set; } = []; }
+public sealed class BorrowerEntity { public string Id { get; set; } = Guid.NewGuid().ToString("N"); public string Name { get; set; } = ""; public string Email { get; set; } = ""; public List<LoanEntity> Loans { get; set; } = []; }
+public sealed class LoanEntity { public string Id { get; set; } = Guid.NewGuid().ToString("N"); public string BookId { get; set; } = ""; public BookEntity? Book { get; set; } public string BorrowerId { get; set; } = ""; public BorrowerEntity? Borrower { get; set; } public DateTimeOffset BorrowedAt { get; set; } public DateTimeOffset? ReturnedAt { get; set; } }
